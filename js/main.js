@@ -7,7 +7,6 @@ const aboutText =
   "Specialized in Power BI, Microsoft Fabric, SQL, and Python for building automated data pipelines and interactive dashboards.\n" +
   "Focused on data quality, scalable analytics, and delivering clear, actionable insights for business stakeholders in the UAE.";
 
-
 const words = aboutText.split(" ");
 const target = document.getElementById("typedText");
 
@@ -42,7 +41,6 @@ const galleries = {
     "assets/img/dash3-3.png",
     "assets/img/dash3-4.png"
   ],
-
   dash4: [
     "assets/img/dash4-1.png",
     "assets/img/dash4-2.png"
@@ -55,44 +53,8 @@ const galleries = {
     "assets/img/dash6-2.png"
   ]
 };
-document.querySelectorAll(".project__cover[data-gallery]").forEach((img) => {
-  const key = img.getAttribute("data-gallery");
-  const images = galleries[key];
-  if (!images || images.length === 0) return;
 
-  const card = img.closest(".project");
-  const countEl = card.querySelector(".project__count");
-  let idx = 0;
-  let cycleTimer = null;
-
-  function updateCount() {
-    countEl.textContent = images.length > 1 ? `${idx + 1}/${images.length}` : "";
-  }
-  updateCount();
-
-  card.addEventListener("mouseenter", () => {
-    if (images.length < 2) return;
-    cycleTimer = setInterval(() => {
-      idx = (idx + 1) % images.length;
-      img.style.opacity = 0;
-      setTimeout(() => {
-        img.src = images[idx];
-        updateCount();
-        img.style.opacity = 1;
-      }, 180);
-    }, 1100);
-  });
-
-  card.addEventListener("mouseleave", () => {
-    clearInterval(cycleTimer);
-    idx = 0;
-    img.src = images[0];
-    updateCount();
-    img.style.opacity = 1;
-  });
-});
-
-const modal = document.getElementById("galleryModal");
+// ---- Modal elements ----
 const modal = document.getElementById("galleryModal");
 const modalTitle = document.getElementById("modalTitle");
 const modalImg = document.getElementById("modalImage");
@@ -162,57 +124,75 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft") prevImage();
 });
 
-const counters = document.querySelectorAll(".counter");
+// ---- Auto-cycle screenshots on hover ----
+document.querySelectorAll(".project__cover[data-gallery]").forEach((img) => {
+  const key = img.getAttribute("data-gallery");
+  const images = galleries[key];
+  if (!images || images.length === 0) return;
 
+  const hint = img.closest(".project").querySelector(".project__hint");
+  if (hint) {
+    hint.textContent = images.length > 1
+      ? "Hover to preview · click to expand"
+      : "Click to expand";
+  }
+
+  if (images.length < 2) return; // nothing to cycle
+
+  let idx = 0;
+  let cycleTimer = null;
+
+  img.addEventListener("mouseenter", () => {
+    cycleTimer = setInterval(() => {
+      idx = (idx + 1) % images.length;
+      img.style.opacity = 0;
+      setTimeout(() => {
+        img.src = images[idx];
+        img.style.opacity = 1;
+      }, 180);
+    }, 900);
+  });
+
+  img.addEventListener("mouseleave", () => {
+    clearInterval(cycleTimer);
+    idx = 0;
+    img.src = images[0];
+    img.style.opacity = 1;
+  });
+});
+
+// ---- Stat counters ----
+const counters = document.querySelectorAll(".counter");
 let started = false;
 
 function startCounterAnimation() {
+  if (started) return;
 
-    if (started) return;
+  const stats = document.querySelector(".stats");
+  const rect = stats.getBoundingClientRect();
 
-    const stats = document.querySelector(".stats");
+  if (rect.top < window.innerHeight - 100) {
+    started = true;
 
-    const rect = stats.getBoundingClientRect();
+    counters.forEach(counter => {
+      const target = +counter.dataset.target;
+      let count = 0;
+      const increment = target / 50;
 
-    if (rect.top < window.innerHeight - 100) {
+      function updateCounter() {
+        count += increment;
+        if (count < target) {
+          counter.textContent = Math.ceil(count);
+          requestAnimationFrame(updateCounter);
+        } else {
+          counter.textContent = target;
+        }
+      }
 
-        started = true;
-
-        counters.forEach(counter => {
-
-            const target = +counter.dataset.target;
-
-            let count = 0;
-
-            const increment = target / 50;
-
-            function updateCounter(){
-
-                count += increment;
-
-                if(count < target){
-
-                    counter.textContent = Math.ceil(count);
-
-                    requestAnimationFrame(updateCounter);
-
-                }
-                else{
-
-                    counter.textContent = target;
-
-                }
-
-            }
-
-            updateCounter();
-
-        });
-
-    }
-
+      updateCounter();
+    });
+  }
 }
 
 window.addEventListener("scroll", startCounterAnimation);
-
 startCounterAnimation();
