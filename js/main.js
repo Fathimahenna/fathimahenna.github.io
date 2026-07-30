@@ -124,3 +124,58 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight") nextImage();
   if (e.key === "ArrowLeft") prevImage();
 });
+
+const counters = document.querySelectorAll(".counter");
+
+let started = false;
+
+function startCounterAnimation() {
+
+    if (started) return;
+
+    const stats = document.querySelector(".stats");
+
+    const rect = stats.getBoundingClientRect();
+
+    if (rect.top < window.innerHeight - 100) {
+
+        started = true;
+
+        counters.forEach(counter => {
+
+            const target = +counter.dataset.target;
+
+            let count = 0;
+
+            const increment = target / 50;
+
+            function updateCounter(){
+
+                count += increment;
+
+                if(count < target){
+
+                    counter.textContent = Math.ceil(count);
+
+                    requestAnimationFrame(updateCounter);
+
+                }
+                else{
+
+                    counter.textContent = target;
+
+                }
+
+            }
+
+            updateCounter();
+
+        });
+
+    }
+
+}
+
+window.addEventListener("scroll", startCounterAnimation);
+
+startCounterAnimation();
