@@ -11,7 +11,7 @@ const words = aboutText.split(" ");
 const target = document.getElementById("typedText");
 
 let i = 0;
-const speedMs = 110; // Change typing speed (lower = faster)
+const speedMs = 110;
 
 function typeWordByWord() {
   if (i < words.length) {
@@ -20,41 +20,19 @@ function typeWordByWord() {
     setTimeout(typeWordByWord, speedMs);
   }
 }
-
-// Start typing after a small delay
 setTimeout(typeWordByWord, 400);
 
 // ---- Dashboard Galleries ----
-// Add your images here (per dashboard/project)
 const galleries = {
-  dash1: [
-    "assets/img/dash1-1.png",
-    "assets/img/dash1-2.png",
-    "assets/img/dash1-3.png"
-  ],
-  dash2: [
-    "assets/img/dash2-1.png"
-  ],
-  dash3: [
-    "assets/img/dash3-1.png",
-    "assets/img/dash3-2.png",
-    "assets/img/dash3-3.png",
-    "assets/img/dash3-4.png"
-  ],
-  dash4: [
-    "assets/img/dash4-1.png",
-    "assets/img/dash4-2.png"
-  ],
-  dash5: [
-    "assets/img/dash5-1.png"
-  ],
-  dash6: [
-    "assets/img/dash6-1.png",
-    "assets/img/dash6-2.png"
-  ]
+  dash1: ["assets/img/dash1-1.png", "assets/img/dash1-2.png", "assets/img/dash1-3.png"],
+  dash2: ["assets/img/dash2-1.png"],
+  dash3: ["assets/img/dash3-1.png", "assets/img/dash3-2.png", "assets/img/dash3-3.png", "assets/img/dash3-4.png"],
+  dash4: ["assets/img/dash4-1.png", "assets/img/dash4-2.png"],
+  dash5: ["assets/img/dash5-1.png"],
+  dash6: ["assets/img/dash6-1.png", "assets/img/dash6-2.png"]
 };
 
-// ---- Modal elements ----
+// ---- Modal elements (declared ONCE) ----
 const modal = document.getElementById("galleryModal");
 const modalTitle = document.getElementById("modalTitle");
 const modalImg = document.getElementById("modalImage");
@@ -72,7 +50,6 @@ function openModal(title, images) {
   currentIndex = 0;
   modalTitle.textContent = title;
   updateModalImage();
-
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
@@ -93,13 +70,11 @@ function nextImage() {
   currentIndex = (currentIndex + 1) % currentGallery.length;
   updateModalImage();
 }
-
 function prevImage() {
   currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
   updateModalImage();
 }
 
-// Open modal when clicking any element with data-gallery
 document.querySelectorAll("[data-gallery]").forEach((el) => {
   el.addEventListener("click", () => {
     const key = el.getAttribute("data-gallery");
@@ -110,13 +85,11 @@ document.querySelectorAll("[data-gallery]").forEach((el) => {
   });
 });
 
-// Modal controls
 modalClose.addEventListener("click", closeModal);
 modalOverlay.addEventListener("click", closeModal);
 nextBtn.addEventListener("click", nextImage);
 prevBtn.addEventListener("click", prevImage);
 
-// Keyboard support
 document.addEventListener("keydown", (e) => {
   if (!modal.classList.contains("is-open")) return;
   if (e.key === "Escape") closeModal();
@@ -137,7 +110,7 @@ document.querySelectorAll(".project__cover[data-gallery]").forEach((img) => {
       : "Click to expand";
   }
 
-  if (images.length < 2) return; // nothing to cycle
+  if (images.length < 2) return;
 
   let idx = 0;
   let cycleTimer = null;
@@ -167,13 +140,11 @@ let started = false;
 
 function startCounterAnimation() {
   if (started) return;
-
   const stats = document.querySelector(".stats");
   const rect = stats.getBoundingClientRect();
 
   if (rect.top < window.innerHeight - 100) {
     started = true;
-
     counters.forEach(counter => {
       const target = +counter.dataset.target;
       let count = 0;
@@ -188,7 +159,6 @@ function startCounterAnimation() {
           counter.textContent = target;
         }
       }
-
       updateCounter();
     });
   }
