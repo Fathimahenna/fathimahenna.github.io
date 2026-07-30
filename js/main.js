@@ -103,13 +103,6 @@ document.querySelectorAll(".project__cover[data-gallery]").forEach((img) => {
   const images = galleries[key];
   if (!images || images.length === 0) return;
 
-  const hint = img.closest(".project").querySelector(".project__hint");
-  if (hint) {
-    hint.textContent = images.length > 1
-      ? "Hover to preview · click to expand"
-      : "Click to expand";
-  }
-
   if (images.length < 2) return;
 
   let idx = 0;
