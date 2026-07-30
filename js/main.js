@@ -3,7 +3,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
 // Word-by-word typing effect
 const aboutText =
-  "Data Analyst with 2 years of experience in business intelligence and data visualization.\n" +
+  "Data Analyst with 2+ years of experience in business intelligence and data visualization.\n" +
   "Specialized in Power BI, Microsoft Fabric, SQL, and Python for building automated data pipelines and interactive dashboards.\n" +
   "Focused on data quality, scalable analytics, and delivering clear, actionable insights for business stakeholders in the UAE.";
 
