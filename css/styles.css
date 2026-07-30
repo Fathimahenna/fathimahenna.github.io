@@ -484,3 +484,42 @@ letter-spacing:4px;
 line-height:1.8;
 
 }
+/* Hover-pop gallery */
+.grid{ overflow: visible; }
+
+.project{
+  position: relative;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s ease;
+  will-change: transform;
+}
+.project:hover{
+  transform: scale(1.5);
+  z-index: 50;
+  box-shadow: 0 30px 70px rgba(0,0,0,.6), 0 0 0 1px var(--line);
+}
+
+.project__frame{ position: relative; overflow: hidden; }
+
+.project__cover{ transition: opacity .2s ease; }
+
+.project__count{
+  position: absolute;
+  bottom: 8px; right: 8px;
+  background: rgba(0,0,0,.65);
+  color: var(--muted);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.project:hover .project__count{ opacity: 1; }
+
+.project__hint{
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.project:hover .project__hint{ opacity: 1; }
