@@ -55,7 +55,44 @@ const galleries = {
     "assets/img/dash6-2.png"
   ]
 };
+document.querySelectorAll(".project__cover[data-gallery]").forEach((img) => {
+  const key = img.getAttribute("data-gallery");
+  const images = galleries[key];
+  if (!images || images.length === 0) return;
 
+  const card = img.closest(".project");
+  const countEl = card.querySelector(".project__count");
+  let idx = 0;
+  let cycleTimer = null;
+
+  function updateCount() {
+    countEl.textContent = images.length > 1 ? `${idx + 1}/${images.length}` : "";
+  }
+  updateCount();
+
+  card.addEventListener("mouseenter", () => {
+    if (images.length < 2) return;
+    cycleTimer = setInterval(() => {
+      idx = (idx + 1) % images.length;
+      img.style.opacity = 0;
+      setTimeout(() => {
+        img.src = images[idx];
+        updateCount();
+        img.style.opacity = 1;
+      }, 180);
+    }, 1100);
+  });
+
+  card.addEventListener("mouseleave", () => {
+    clearInterval(cycleTimer);
+    idx = 0;
+    img.src = images[0];
+    updateCount();
+    img.style.opacity = 1;
+  });
+});
+
+const modal = document.getElementById("galleryModal");
 const modal = document.getElementById("galleryModal");
 const modalTitle = document.getElementById("modalTitle");
 const modalImg = document.getElementById("modalImage");
