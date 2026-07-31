@@ -29,7 +29,9 @@ const galleries = {
   dash3: ["assets/img/dash3-1.png", "assets/img/dash3-2.png", "assets/img/dash3-3.png", "assets/img/dash3-4.png"],
   dash4: ["assets/img/dash4-1.png", "assets/img/dash4-2.png"],
   dash5: ["assets/img/dash5-1.png"],
-  dash6: ["assets/img/dash6-1.png", "assets/img/dash6-2.png"]
+  dash6: ["assets/img/dash6-1.png", "assets/img/dash6-2.png"],
+  dash7: ["assets/img/dash7-1.png"],,
+  dash8: ["assets/img/dash8-1.png"],
 };
 
 // ---- Modal elements (declared ONCE) ----
